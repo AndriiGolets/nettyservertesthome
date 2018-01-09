@@ -53,8 +53,8 @@ public class NettyHttpServer {
                                     ch.pipeline().addLast("codec", new HttpServerCodec());
                                     ch.pipeline().addLast("aggregator",
                                             new HttpObjectAggregator(512*1024));
-                                    ch.pipeline().addLast(
-                                            new LoggingHandler(LogLevel.INFO));
+                                /*    ch.pipeline().addLast(
+                                            new LoggingHandler(LogLevel.INFO));*/
                                     ch.pipeline().addLast("request",
                                             new ChannelInboundHandlerAdapter() // #5
                                             {
@@ -65,7 +65,7 @@ public class NettyHttpServer {
                                                     if (msg instanceof FullHttpRequest)
                                                     {
                                                         final FullHttpRequest request = (FullHttpRequest) msg;
-                                                        System.out.println(request.toString());
+                                                        //System.out.println(request.toString());
 
                                                         final String responseMessage = "Hello from Netty!";
                                                         FullHttpResponse response = new DefaultFullHttpResponse(
@@ -134,8 +134,7 @@ public class NettyHttpServer {
         catch (InterruptedException e) { }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new NettyHttpServer().start();
     }
 
