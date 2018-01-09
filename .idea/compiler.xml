@@ -12,6 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="camel-netty-client" target="1.8" />
       <module name="nettyclient" target="1.8" />
       <module name="nettyservertest" target="1.8" />
       <module name="springrestclient" target="1.8" />

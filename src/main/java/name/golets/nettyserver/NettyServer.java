@@ -11,6 +11,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import sun.nio.ch.EPollSelectorProvider;
 
 import java.net.InetSocketAddress;
 
@@ -49,7 +50,6 @@ public class NettyServer {
                             );
                         }
                     })
-
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 

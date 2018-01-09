@@ -11,6 +11,7 @@
     <modules>
         <module>nettyclient</module>
         <module>springrestclient</module>
+        <module>camel-netty-client</module>
     </modules>
 
 

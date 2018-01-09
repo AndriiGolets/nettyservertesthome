@@ -5,6 +5,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,35 +15,23 @@ import java.util.concurrent.TimeUnit;
  */
 public class SpringRestClient {
 
-    private static RestTemplate restTemplate = new RestTemplate ();
+    private static ExecutorService executor = Executors.newFixedThreadPool (20);
 
     public static void main(String[] args) {
 
-        String url = "http://localhost:8080";
+        List<ClientThread> threadList = new ArrayList<> ();
 
-        String input = "Hello Netty";
-
-
-        HttpHeaders headers = new HttpHeaders ();
-        headers.setContentType (MediaType.TEXT_HTML);
-
-
-        List<ResponseEntity<String>> respList = new ArrayList<> (16000);
-        long startTime = System.nanoTime ();
-        for (int i = 0; i < 16000; i++) {
-            ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, new HttpEntity<> (input, headers), String.class);
-            respList.add (responseS);
+        for (int i = 0; i < 10; i++) {
+            threadList.add (new ClientThread ("0" + i));
         }
-        long difference = System.nanoTime () - startTime;
-        System.out.println (respList.size ());
 
-        System.out.println ("Total execution time: " +
-                String.format ("%d min, %d sec , %d mil",
-                        TimeUnit.NANOSECONDS.toMinutes (difference),
-                        TimeUnit.NANOSECONDS.toSeconds (difference),
-                        TimeUnit.NANOSECONDS.toMillis (difference)
-                ));
+        try {
+            executor.invokeAll (threadList);
+        } catch (InterruptedException e) {
+            e.printStackTrace ();
+        }
 
     }
+
 
 }
