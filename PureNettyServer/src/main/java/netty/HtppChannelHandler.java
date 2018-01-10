@@ -1,4 +1,4 @@
-package name.golets.nettyserver.netty;
+package netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

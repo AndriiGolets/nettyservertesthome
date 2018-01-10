@@ -1,4 +1,4 @@
-package name.golets.nettyserver.camel;
+package camel;
 
 
 import org.springframework.boot.SpringApplication;

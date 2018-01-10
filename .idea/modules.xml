@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/nettyclient/nettyclient.iml" filepath="$PROJECT_DIR$/nettyclient/nettyclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CamelNettyServer/CamelNettyServer.iml" filepath="$PROJECT_DIR$/CamelNettyServer/CamelNettyServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PureNettyServer/PureNettyServer.iml" filepath="$PROJECT_DIR$/PureNettyServer/PureNettyServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/netty-server-test.iml" filepath="$PROJECT_DIR$/netty-server-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/nettyservertest.iml" filepath="$PROJECT_DIR$/nettyservertest.iml" />
       <module fileurl="file://$PROJECT_DIR$/springrestclient/springrestclient.iml" filepath="$PROJECT_DIR$/springrestclient/springrestclient.iml" />
     </modules>

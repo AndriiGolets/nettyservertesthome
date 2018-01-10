@@ -7,15 +7,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="nettyclient" />
+        <module name="camelnettyserver" />
+        <module name="CamelNettyServer" />
+        <module name="nativenettyserver" />
+        <module name="PureNettyServer" />
         <module name="springrestclient" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="camel-netty-client" target="1.8" />
+      <module name="CamelNettyServer" target="1.8" />
+      <module name="camelnettyserver" target="1.8" />
+      <module name="nativenettyserver" target="1.8" />
+      <module name="NativeNettyServer" target="1.8" />
+      <module name="netty-server-test" target="1.8" />
       <module name="nettyclient" target="1.8" />
       <module name="nettyservertest" target="1.8" />
+      <module name="PureNettyServer" target="1.8" />
       <module name="springrestclient" target="1.8" />
+      <module name="Test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

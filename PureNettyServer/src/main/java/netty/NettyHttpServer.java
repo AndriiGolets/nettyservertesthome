@@ -1,13 +1,17 @@
-package name.golets.nettyserver.netty;
+package netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.EpollChannelOption;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollMode;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
 
 /**
  * Created by andrii on 1/6/18.
@@ -52,12 +56,12 @@ public class NettyHttpServer {
                                     ch.pipeline ().addLast ("request", new HtppChannelHandler ());
                                 }
                             })
-                            .option (ChannelOption.SO_BACKLOG, 256)
+                            .option (ChannelOption.SO_BACKLOG, 128)
                            // .option (ChannelOption.TCP_NODELAY, true)
                            // .option (EpollChannelOption.EPOLL_MODE, EpollMode.EDGE_TRIGGERED)
                            // .option (EpollChannelOption.SO_REUSEPORT, true)
                             .childOption (ChannelOption.SO_KEEPALIVE, true);
-            channel = bootstrap.bind (8080).sync ();
+            channel = bootstrap.bind (8088).sync ();
         } catch (final InterruptedException e) {
         }
     }

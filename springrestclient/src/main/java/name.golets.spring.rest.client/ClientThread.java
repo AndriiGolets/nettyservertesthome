@@ -31,16 +31,16 @@ public class ClientThread implements Callable<Integer> {
         HttpHeaders headers = new HttpHeaders ();
         headers.setContentType (MediaType.TEXT_HTML);
 
-        List<ResponseEntity<String>> respList = new ArrayList<> (16000);
+        //List<ResponseEntity<String>> respList = new ArrayList<> (16000);
         long startTime = System.nanoTime ();
         for (int i = 0; i < 500000; i++) {
             ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, new HttpEntity<> (input, headers), String.class);
-            System.out.println (responseS.toString ());
-            respList.add (responseS);
+          //  System.out.println (responseS.toString ());
+          //  respList.add (responseS);
         }
 
         long difference = System.nanoTime () - startTime;
-        System.out.println (respList.size ());
+        //System.out.println (respList.size ());
 
         System.out.println (name + " Total execution time: " +
                 String.format ("%d min, %d sec , %d mil",

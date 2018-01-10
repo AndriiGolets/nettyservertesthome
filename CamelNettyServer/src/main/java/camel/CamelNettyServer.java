@@ -1,4 +1,4 @@
-package name.golets.nettyserver.camel;
+package camel;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,6 @@ public class CamelNettyServer extends RouteBuilder{
     @Override
     public void configure() throws Exception {
         System.out.println (" ----- CamelNettyRouteStart ");
-        from ("netty4-http:http://localhost:8088?keepAlive=true").process (readProcessor);
+        from ("netty4-http:http://localhost:8088?keepAlive=true").process (readProcessor).transform ().constant ("Netty server response");
     }
 }

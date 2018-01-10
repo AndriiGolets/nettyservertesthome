@@ -10,9 +10,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SpringBootApplication
-public class RunRestClient implements CommandLineRunner{
+public class RunRestClient implements CommandLineRunner {
 
-    private static ExecutorService executor = Executors.newFixedThreadPool (4);
+
+    private static final int CLIENT_THREADS_NUMBER = 100;
+
+    private static ExecutorService executor = Executors.newFixedThreadPool (CLIENT_THREADS_NUMBER);
 
     public static void main(String[] args) {
         SpringApplication.run (RunRestClient.class, args);
@@ -24,7 +27,7 @@ public class RunRestClient implements CommandLineRunner{
 
         List<ClientThread> threadList = new ArrayList<> ();
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < CLIENT_THREADS_NUMBER; i++) {
             threadList.add (new ClientThread ("0" + i));
         }
 
