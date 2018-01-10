@@ -1,18 +1,26 @@
 package name.golets.spring.rest.client;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Created by andrii on 1/6/18.
- */
-public class SpringRestClient {
+@SpringBootApplication
+public class RunRestClient implements CommandLineRunner{
 
     private static ExecutorService executor = Executors.newFixedThreadPool (4);
 
     public static void main(String[] args) {
+        SpringApplication.run (RunRestClient.class, args);
+    }
+
+    @Override
+    public void run(String... strings) throws Exception {
+
 
         List<ClientThread> threadList = new ArrayList<> ();
 
@@ -27,6 +35,4 @@ public class SpringRestClient {
         }
 
     }
-
-
 }

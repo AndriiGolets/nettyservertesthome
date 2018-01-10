@@ -11,11 +11,16 @@
     <modules>
         <module>nettyclient</module>
         <module>springrestclient</module>
-        <module>camel-netty-client</module>
     </modules>
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+            <version>2.18.5</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
         <dependency>
@@ -31,6 +36,28 @@
             <artifactId>netty-transport</artifactId>
             <version>4.1.19.Final</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-core -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>2.20.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-netty4-http -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-netty4-http</artifactId>
+            <version>2.20.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
 
     </dependencies>
 

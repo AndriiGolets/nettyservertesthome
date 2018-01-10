@@ -23,7 +23,7 @@ public class ClientThread implements Callable<Integer> {
 
 
         System.out.println (" Client : " + name + " started !");
-        String url = "http://localhost:8080";
+        String url = "http://localhost:8088";
 
         String input = "Hello Netty";
 
@@ -35,6 +35,7 @@ public class ClientThread implements Callable<Integer> {
         long startTime = System.nanoTime ();
         for (int i = 0; i < 500000; i++) {
             ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, new HttpEntity<> (input, headers), String.class);
+            System.out.println (responseS.toString ());
             respList.add (responseS);
         }
 
