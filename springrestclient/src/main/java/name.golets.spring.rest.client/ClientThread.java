@@ -3,14 +3,15 @@ package name.golets.spring.rest.client;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 public class ClientThread implements Callable<Integer> {
-
-    private static RestTemplate restTemplate = new RestTemplate ();
 
     private String name;
 
@@ -27,16 +28,22 @@ public class ClientThread implements Callable<Integer> {
 
         String input = "Hello Netty";
 
+        Message message = new Message (input);
 
-        HttpHeaders headers = new HttpHeaders ();
-        headers.setContentType (MediaType.TEXT_HTML);
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        List<Charset> acceptCharset = Collections.singletonList(StandardCharsets.UTF_8);
+        headers.setAcceptCharset(acceptCharset);
+
+      //  headers.setContentType (MediaType.TEXT_HTML);
+        HttpEntity<Message> entity = new HttpEntity<>(message, headers);
 
         //List<ResponseEntity<String>> respList = new ArrayList<> (16000);
         long startTime = System.nanoTime ();
         for (int i = 0; i < 500000; i++) {
-            ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, new HttpEntity<> (input, headers), String.class);
+            ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, entity, String.class);
           //  System.out.println (responseS.toString ());
-          //  respList.add (responseS);
+            //  respList.add (responseS);
         }
 
         long difference = System.nanoTime () - startTime;
@@ -51,4 +58,28 @@ public class ClientThread implements Callable<Integer> {
 
         return null;
     }
+
+    class Message {
+
+        private String message;
+
+        Message(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
 }
+//<200 OK,Hello from Netty!,{connection=[keep-alive], content-type=[text/plain], content-length=[17]}>
+
+/*
+
+
+
+* */

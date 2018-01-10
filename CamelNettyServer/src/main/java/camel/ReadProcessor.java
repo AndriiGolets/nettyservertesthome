@@ -4,6 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.netty.handler.codec.http.HttpRequest;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.netty4.http.NettyHttpMessage;
@@ -25,9 +26,9 @@ public class ReadProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        exchange.getIn (NettyHttpMessage.class).getHttpRequest ();
+        HttpRequest request = exchange.getIn (NettyHttpMessage.class).getHttpRequest ();
         counter.incrementAndGet ();
-        // System.out.println (request.toString ());
+      //  System.out.println (request.toString ());
     }
 
 }

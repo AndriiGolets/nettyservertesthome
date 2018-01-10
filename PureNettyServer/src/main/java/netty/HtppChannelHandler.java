@@ -27,7 +27,7 @@ public class HtppChannelHandler extends ChannelInboundHandlerAdapter {
 
         if (msg instanceof FullHttpRequest) {
             final FullHttpRequest request = (FullHttpRequest) msg;
-            //System.out.println(request.toString());
+           // System.out.println(request.toString());
 
             final String responseMessage = "Hello from Netty!";
             FullHttpResponse response = new DefaultFullHttpResponse (
