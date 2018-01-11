@@ -28,7 +28,7 @@ public class RunRestClient implements CommandLineRunner {
         List<ClientThread> threadList = new ArrayList<> ();
 
         for (int i = 0; i < CLIENT_THREADS_NUMBER; i++) {
-            threadList.add (new ClientThread ("0" + i));
+            threadList.add (new ClientThread (i < 10 ? "0" + i : "" + i));
         }
 
         try {

@@ -1,8 +1,10 @@
-package netty;
+package netty.handlers;
 
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.netty.buffer.Unpooled.copiedBuffer;
 
-public class HtppChannelHandler extends ChannelInboundHandlerAdapter {
+@Sharable
+@Component
+public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
 
     private static AtomicInteger counter = new AtomicInteger (0);
     private static ScheduledThreadPoolExecutor TIME_SERVICE = new ScheduledThreadPoolExecutor (2);

@@ -4,9 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CamelNettyServer/CamelNettyServer.iml" filepath="$PROJECT_DIR$/CamelNettyServer/CamelNettyServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/PureNettyServer/PureNettyServer.iml" filepath="$PROJECT_DIR$/PureNettyServer/PureNettyServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringBootNetty/SpringBootNetty.iml" filepath="$PROJECT_DIR$/SpringBootNetty/SpringBootNetty.iml" />
       <module fileurl="file://$PROJECT_DIR$/netty-server-test.iml" filepath="$PROJECT_DIR$/netty-server-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/nettyservertest.iml" filepath="$PROJECT_DIR$/nettyservertest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/springrestclient/springrestclient.iml" filepath="$PROJECT_DIR$/springrestclient/springrestclient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springrestclient/spring-rest-client.iml" filepath="$PROJECT_DIR$/springrestclient/spring-rest-client.iml" />
     </modules>
   </component>
 </project>

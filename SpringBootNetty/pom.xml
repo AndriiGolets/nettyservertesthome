@@ -22,13 +22,13 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
-            <version>1.5.9.RELEASE</version>
+            <version>1.5.3.RELEASE</version>
         </dependency>
         <!--Use Jetty instead of tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
-            <version>1.5.9.RELEASE</version>
+            <version>1.5.3.RELEASE</version>
         </dependency>
     </dependencies>
 
