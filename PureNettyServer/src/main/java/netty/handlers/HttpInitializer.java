@@ -5,30 +5,32 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.channel.socket.SocketChannel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
+@PropertySource("classpath:netty-server.properties")
 public class HttpInitializer extends ChannelInitializer<SocketChannel> {
 
-  /*  private final HttpObjectAggregator aggregator;
+    @Value("${aggregator.size}")
+    private int maxContentLength;
 
-    private final HttpServerCodec httpServerCodec;
+    private static final int KILOBYTE = 1024;
 
     private final HttpChannelHandler httpChannelHandler;
 
     @Autowired
-    public HttpInitializer(HttpObjectAggregator aggregator, HttpServerCodec httpServerCodec, HttpChannelHandler httpChannelHandler) {
-        this.aggregator = aggregator;
-        this.httpServerCodec = httpServerCodec;
+    public HttpInitializer(HttpChannelHandler httpChannelHandler) {
         this.httpChannelHandler = httpChannelHandler;
-    }*/
+
+    }
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline ().addLast (new HttpServerCodec ());
-        ch.pipeline ().addLast (new HttpObjectAggregator (512 * 1024));
+        ch.pipeline ().addLast (new HttpObjectAggregator (maxContentLength * KILOBYTE));
         // ch.pipeline().addLast(new LoggingHandler(LogLevel.INFO));
-        ch.pipeline ().addLast (new HttpChannelHandler ());
+        ch.pipeline ().addLast (httpChannelHandler);
     }
-
 }

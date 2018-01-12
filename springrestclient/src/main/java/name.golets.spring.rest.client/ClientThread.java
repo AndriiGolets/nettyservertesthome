@@ -41,9 +41,9 @@ public class ClientThread implements Callable<Integer> {
         //List<ResponseEntity<String>> respList = new ArrayList<> (16000);
         long startTime = System.nanoTime ();
         for (int i = 0; i < 500000; i++) {
-            ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.GET, entity, String.class);
-          //  System.out.println (responseS.toString ());
-            //  respList.add (responseS);
+            ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.POST, entity, String.class);
+            System.out.println (responseS.toString ());
+          //  respList.add (responseS);
         }
 
         long difference = System.nanoTime () - startTime;
@@ -80,6 +80,31 @@ public class ClientThread implements Callable<Integer> {
 
 /*
 
+        LOGGER.info ("Starting server at " + tcpPort);
 
+        Runtime.getRuntime ().addShutdownHook (new Thread () {
+            @Override
+            public void run() {
+                try {
+                    serverChannelFuture.channel ().closeFuture ().sync ();
+                } catch (Exception e) {
+                    LOGGER.error (e.getMessage (), e);
+                }
+                LOGGER.info ("Server at port: " + tcpPort + " Shutdown");
+            }
+        });
+
+        serverChannelFuture = b.bind (tcpPort).sync ();
+    }
+
+  @Bean(destroyMethod = "shutdownGracefully")
+    public NioEventLoopGroup bossGroup() {
+        return new NioEventLoopGroup (bossCount);
+    }
+
+    @Bean(destroyMethod = "shutdownGracefully")
+    public NioEventLoopGroup workerGroup() {
+        return new NioEventLoopGroup (workerCount);
+    }
 
 * */

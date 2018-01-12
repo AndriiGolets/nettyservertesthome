@@ -4,30 +4,23 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.HttpServerCodec;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
 import netty.handlers.HttpInitializer;
-import netty.handlers.HttpInitializerAutowired;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
 @Configuration
-@ComponentScan("netty")
 @PropertySource("classpath:netty-server.properties")
 public class SpringConfig {
-
-    private static final int KILOBYTE = 1024;
 
     @Value("${boss.thread.count}")
     private int bossCount;
@@ -44,15 +37,13 @@ public class SpringConfig {
     @Value("${so.backlog}")
     private int backlog;
 
-    @Value("${aggregator.size}")
-    private int maxContentLength;
+
+    private final HttpInitializer httpInitializer;
 
     @Autowired
-    private HttpInitializer httpInitializer;
-
-    @Autowired
-    private HttpInitializerAutowired httpInitializerAutowired;
-
+    public SpringConfig(HttpInitializer httpInitializer) {
+        this.httpInitializer = httpInitializer;
+    }
 
     @SuppressWarnings("unchecked")
     @Bean(name = "serverBootstrap")
@@ -62,8 +53,7 @@ public class SpringConfig {
 
         b.group (bossGroup (), workerGroup ())
                 .channel (NioServerSocketChannel.class)
-                //.childHandler (httpInitializer);
-                .childHandler (httpInitializerAutowired);
+                .childHandler (httpInitializer);
 
         for (ChannelOption option : tcpChannelOptions ().keySet ()) {
             b.option (option, tcpChannelOptions ().get (option));
@@ -93,16 +83,6 @@ public class SpringConfig {
         options.put (ChannelOption.SO_KEEPALIVE, keepAlive);
         options.put (ChannelOption.SO_BACKLOG, backlog);
         return options;
-    }
-
-    @Bean
-    public HttpServerCodec httpServerCodec() {
-        return new HttpServerCodec ();
-    }
-
-    @Bean
-    public HttpObjectAggregator httpObjectAggregator() {
-        return new HttpObjectAggregator (maxContentLength * KILOBYTE);
     }
 
     @Bean

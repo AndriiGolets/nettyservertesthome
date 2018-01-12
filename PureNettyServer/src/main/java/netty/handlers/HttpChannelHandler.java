@@ -4,7 +4,10 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -16,12 +19,14 @@ import static io.netty.buffer.Unpooled.copiedBuffer;
 @Component
 public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpChannelHandler.class);
+
     private static AtomicInteger counter = new AtomicInteger (0);
     private static ScheduledThreadPoolExecutor TIME_SERVICE = new ScheduledThreadPoolExecutor (2);
 
     static  {
         TIME_SERVICE.scheduleAtFixedRate (() -> {
-            System.out.println ("Requests handled in second : " +  counter);
+            LOGGER.info ("Requests handled in second : " +  counter);
             counter.set (0);
         }, 0, 1, TimeUnit.SECONDS);
     }
@@ -31,8 +36,8 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
 
         if (msg instanceof FullHttpRequest) {
             final FullHttpRequest request = (FullHttpRequest) msg;
-           // System.out.println(request.toString());
-
+            // System.out.println(request.toString());
+            counter.incrementAndGet ();
             final String responseMessage = "Hello from Netty!";
             FullHttpResponse response = new DefaultFullHttpResponse (
                     HttpVersion.HTTP_1_1,
@@ -40,7 +45,6 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
                     copiedBuffer (responseMessage.getBytes ())
             );
 
-            counter.incrementAndGet ();
             if (HttpUtil.isKeepAlive (request)) {
                 response.headers ().set (
                         HttpHeaderNames.CONNECTION,
@@ -58,11 +62,13 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
         }
     }
 
+
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx)
-            throws Exception {
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush ();
     }
+
+
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,

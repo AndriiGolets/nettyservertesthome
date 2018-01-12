@@ -12,15 +12,19 @@ import java.net.InetSocketAddress;
 @Component
 public class TCPServer {
 
-	@Autowired
-	private ServerBootstrap b;
+	private final ServerBootstrap b;
 	
-	@Autowired
-	private InetSocketAddress tcpPort;
+	private final InetSocketAddress tcpPort;
 
 	private ChannelFuture serverChannelFuture;
 
-	//@PostConstruct
+	@Autowired
+	public TCPServer(ServerBootstrap b, InetSocketAddress tcpPort) {
+		this.b = b;
+		this.tcpPort = tcpPort;
+	}
+
+	@PostConstruct
 	public void start() throws Exception {
 		System.out.println("Starting server at " + tcpPort);
 		serverChannelFuture = b.bind(tcpPort).sync();

@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 public class RunRestClient implements CommandLineRunner {
 
 
-    private static final int CLIENT_THREADS_NUMBER = 100;
+    private static final int CLIENT_THREADS_NUMBER = 4;
 
     private static ExecutorService executor = Executors.newFixedThreadPool (CLIENT_THREADS_NUMBER);
 
