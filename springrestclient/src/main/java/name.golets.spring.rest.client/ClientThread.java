@@ -1,11 +1,14 @@
 package name.golets.spring.rest.client;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -13,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ClientThread implements Callable<Integer> {
 
+    private static final int TOTAL = 512;
+    private static final int PER_ROUTE = 256;
     private String name;
 
     public ClientThread(String name) {
@@ -30,24 +35,27 @@ public class ClientThread implements Callable<Integer> {
 
         Message message = new Message (input);
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        List<Charset> acceptCharset = Collections.singletonList(StandardCharsets.UTF_8);
-        headers.setAcceptCharset(acceptCharset);
+        RestTemplate restTemplate = new RestTemplate ();
+        HttpClient httpClient = HttpClientBuilder.create ()
+                .setMaxConnTotal (TOTAL)
+                .setMaxConnPerRoute (PER_ROUTE)
+                .build ();
+        restTemplate.setRequestFactory (new HttpComponentsClientHttpRequestFactory (httpClient));
 
-      //  headers.setContentType (MediaType.TEXT_HTML);
-        HttpEntity<Message> entity = new HttpEntity<>(message, headers);
+        HttpHeaders headers = new HttpHeaders ();
+        List<Charset> acceptCharset = Collections.singletonList (StandardCharsets.UTF_8);
+        headers.setAcceptCharset (acceptCharset);
 
-        //List<ResponseEntity<String>> respList = new ArrayList<> (16000);
+        //  headers.setContentType (MediaType.TEXT_HTML);
+        HttpEntity<Message> entity = new HttpEntity<> (message, headers);
+
         long startTime = System.nanoTime ();
         for (int i = 0; i < 500000; i++) {
             ResponseEntity<String> responseS = restTemplate.exchange (url, HttpMethod.POST, entity, String.class);
-            System.out.println (responseS.toString ());
-          //  respList.add (responseS);
+            // System.out.println (responseS.toString ());
         }
 
         long difference = System.nanoTime () - startTime;
-        //System.out.println (respList.size ());
 
         System.out.println (name + " Total execution time: " +
                 String.format ("%d min, %d sec , %d mil",
