@@ -17,6 +17,7 @@
       <set>
         <option value="$PROJECT_DIR$/NativeNettyServer/pom.xml" />
         <option value="$PROJECT_DIR$/Test/pom.xml" />
+        <option value="$PROJECT_DIR$/Zoomuluss/pom.xml" />
         <option value="$PROJECT_DIR$/camel-netty-client/pom.xml" />
         <option value="$PROJECT_DIR$/nettyclient/pom.xml" />
       </set>

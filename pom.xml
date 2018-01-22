@@ -12,6 +12,7 @@
         <module>springrestclient</module>
         <module>CamelNettyServer</module>
         <module>PureNettyServer</module>
+
     </modules>
 
 

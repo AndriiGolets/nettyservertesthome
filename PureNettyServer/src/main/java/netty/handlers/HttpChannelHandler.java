@@ -1,5 +1,7 @@
 package netty.handlers;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import static io.netty.buffer.Unpooled.copiedBuffer;
 
 @Sharable
 @Component
@@ -39,11 +39,14 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
             // System.out.println(request.toString());
             counter.incrementAndGet ();
             final String responseMessage = "Hello from Netty!";
+            ByteBuf byteBuf = Unpooled.copiedBuffer (responseMessage.getBytes ());
+
             FullHttpResponse response = new DefaultFullHttpResponse (
                     HttpVersion.HTTP_1_1,
                     HttpResponseStatus.OK,
-                    copiedBuffer (responseMessage.getBytes ())
+                    byteBuf
             );
+          //  byteBuf.release ();
 
             if (HttpUtil.isKeepAlive (request)) {
                 response.headers ().set (
@@ -73,10 +76,12 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,
                                 Throwable cause) throws Exception {
+        ByteBuf byteBuf = Unpooled.copiedBuffer (cause.getMessage ().getBytes ());
         ctx.writeAndFlush (new DefaultFullHttpResponse (
                 HttpVersion.HTTP_1_1,
                 HttpResponseStatus.INTERNAL_SERVER_ERROR,
-                copiedBuffer (cause.getMessage ().getBytes ())
+                byteBuf
         ));
+        //byteBuf.release ();
     }
 }
