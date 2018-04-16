@@ -13,13 +13,16 @@ import java.util.concurrent.Executors;
 public class RunRestClient implements CommandLineRunner {
 
 
-    private static final int CLIENT_THREADS_NUMBER = 50;
+    private static final int CLIENT_THREADS_NUMBER = 4;
 
     private static ExecutorService executor = Executors.newFixedThreadPool (CLIENT_THREADS_NUMBER);
 
     public static void main(String[] args) {
-        System.setProperty ("javax.net.ssl.keyStore", "/home/GAMELOFT/andrii.golets/work/jdk1.8.0_151/jre/lib/security/cacerts");
-        System.setProperty ("javax.net.ssl.keyStorePassword", "changeit");
+
+       // System.setProperty ("javax.net.debug", "all");
+       // System.setProperty ("javax.net.ssl.keyStore", "/home/GAMELOFT/andrii.golets/work/jdk1.8.0_151/jre/lib/security/cacerts1");
+       // System.setProperty ("javax.net.ssl.keyStorePassword", "changeit");
+
         SpringApplication.run (RunRestClient.class, args);
     }
 

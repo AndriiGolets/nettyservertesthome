@@ -1,6 +1,7 @@
 package netty.handlers;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
+import java.security.MessageDigest;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,7 +38,12 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
 
         if (msg instanceof FullHttpRequest) {
             final FullHttpRequest request = (FullHttpRequest) msg;
-            // System.out.println(request.toString());
+
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+            System.out.println(" -- " + request.content().writerIndex());
+            System.out.println(" -- " +  ByteBufUtil.hashCode(request.content()));
+            System.out.println(request.toString());
             counter.incrementAndGet ();
             final String responseMessage = "Hello from Netty!";
             ByteBuf byteBuf = Unpooled.copiedBuffer (responseMessage.getBytes ());
@@ -54,6 +61,7 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
                         HttpHeaderValues.KEEP_ALIVE
                 );
             }
+
             response.headers ().set (HttpHeaderNames.CONTENT_TYPE,
                     "text/plain");
             response.headers ().set (HttpHeaderNames.CONTENT_LENGTH,
@@ -70,8 +78,6 @@ public class HttpChannelHandler extends ChannelInboundHandlerAdapter {
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush ();
     }
-
-
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,
